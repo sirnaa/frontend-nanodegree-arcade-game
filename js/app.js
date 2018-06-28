@@ -1,15 +1,22 @@
 // Enemies our player must avoid
-class Enemy { 
+class Enemy {
 	constructor(x,y){
 		this.sprite = 'images/enemy-bug.png';
 	    this.x = x;
 		this.y = y;
+
 		// Variables applied to each of our instances go here,
     // we've provided one for you to get started
 	}
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
-	update(dt) { 
+	update(dt) {
+		if (this.x<505) {
+			this.x +=100*dt;
+		} else {
+			this.x = -100;
+			this.x +=100*dt;
+		 }
 // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
@@ -33,13 +40,23 @@ class Player {
 	render(){
 		ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 	}
-	handleInput(){}
+	handleInput(allowedKeys) {
+		switch(allowedKeys) {
+			case 'left': this.x-=101;
+				return;
+			case 'right': this.x+=101;
+				return;
+			case 'up': this.y-=84;
+				return;
+			case 'down': this.y+=84;
+		}
+	}
 // Now instantiate your objects.
 }
 
 
 // Place all enemy objects in an array called allEnemies
-allEnemies= [new Enemy(-100,63), new Enemy(0, 146), new Enemy(0,229)];
+allEnemies= [new Enemy(-100,63), new Enemy(-150, 146), new Enemy(0,229)];
 // Place the player object in a variable called player
 const player = new Player(200,320);
 
