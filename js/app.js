@@ -16,7 +16,7 @@ class Enemy {
 			this.x +=this.speed*dt;
 		} else {
 			this.x = -100;
-			this.speed =Math.random()*500;
+			this.speed =(Math.random()+1)*110;
 			this.x +=this.speed*dt;
 				 }
 // You should multiply any movement by the dt parameter
@@ -27,6 +27,7 @@ class Enemy {
 	render() {
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 	}
+
 }
 // Now write your own player class
 // This class requires an update(), render() and
@@ -45,18 +46,32 @@ class Player {
 	handleInput(allowedKeys) {
 		switch(allowedKeys) {
 			case 'left': this.x-=101;
+				if (this.x<-2) {
+					this.x = 402;
+				}
 				return;
 			case 'right': this.x+=101;
+				if (this.x>402) {
+					this.x = -2;
+				}
 				return;
 			case 'up': this.y-=84;
+				if (this.y<-16) {
+					this.y = 404;
+				}
 				return;
 			case 'down': this.y+=84;
+				if (this.y>404) {
+					this.y = -16;
+				}
+				return;
 		}
 	}
 	reset() {
 		this.x = 200;
 		this.y = 320;
 	}
+
 
 
 // Now instantiate your objects.
