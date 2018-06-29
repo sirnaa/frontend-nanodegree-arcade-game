@@ -2,8 +2,9 @@
 class Enemy {
 	constructor(x,y){
 		this.sprite = 'images/enemy-bug.png';
-	    this.x = x;
+	  this.x = x;
 		this.y = y;
+		this.speed= 100;
 
 		// Variables applied to each of our instances go here,
     // we've provided one for you to get started
@@ -12,11 +13,12 @@ class Enemy {
 // Parameter: dt, a time delta between ticks
 	update(dt) {
 		if (this.x<505) {
-			this.x +=100*dt;
+			this.x +=this.speed*dt;
 		} else {
 			this.x = -100;
-			this.x +=100*dt;
-		 }
+			this.speed =Math.random()*500;
+			this.x +=this.speed*dt;
+				 }
 // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
@@ -51,12 +53,19 @@ class Player {
 			case 'down': this.y+=84;
 		}
 	}
+	reset() {
+		this.x = 200;
+		this.y = 320;
+	}
+
+
 // Now instantiate your objects.
 }
 
 
 // Place all enemy objects in an array called allEnemies
 allEnemies= [new Enemy(-100,63), new Enemy(-150, 146), new Enemy(0,229)];
+const [enemy1, enemy2,enemy3] = allEnemies;
 // Place the player object in a variable called player
 const player = new Player(200,320);
 
