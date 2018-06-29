@@ -98,6 +98,9 @@ var Engine = (function(global) {
     }
     //added checkCollisions declaration so it can reach enemy.method
     function checkCollisions() {
+      allEnemies.forEach(
+        enemy =>  enemy.collision()
+      );
 
 
 }

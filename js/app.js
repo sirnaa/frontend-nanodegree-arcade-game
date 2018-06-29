@@ -27,6 +27,14 @@ class Enemy {
 	render() {
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 	}
+	collision() {
+	  if (player.x<this.x+75 && player.x+70>this.x
+	    && player.y<this.y+65 && player.y+75>this.y) {
+				console.log('colision');
+	      player.reset();
+	    }
+		}
+
 
 }
 // Now write your own player class
@@ -70,6 +78,7 @@ class Player {
 	reset() {
 		this.x = 200;
 		this.y = 320;
+
 	}
 
 
