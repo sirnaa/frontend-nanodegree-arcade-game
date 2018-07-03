@@ -1,13 +1,18 @@
-// Enemies our player must avoid
+window.onload = function() {
+    const modal = document.querySelector('#modal');
+		const info = document.getElementById('info');
+		const scoring = document.getElementById('scoring');
+      const btn = document.querySelector('.btn');
+
+  }
+
+	// Enemies our player must avoid
 class Enemy {
 	constructor(x,y){
 		this.sprite = 'images/enemy-bug.png';
 	  this.x = x;
 		this.y = y;
 		this.speed= 100;
-
-		// Variables applied to each of our instances go here,
-    // we've provided one for you to get started
 	}
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -30,22 +35,22 @@ class Enemy {
 	collision() {
 	  if (player.x<this.x+75 && player.x+70>this.x
 	    && player.y<this.y+65 && player.y+75>this.y) {
-				console.log('colision');
+				console.log('collision');
 	      player.reset();
 	    }
 		}
 
 
 }
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
+// Player class
 
 class Player {
 	constructor(x,y) {
 		this.sprite = 'images/char-boy.png';
 		this.x = x;
 		this.y = y;
+		this.lifes = 3;
+		this.score = 0;
 	}
 	update(){}
 	render(){
@@ -65,6 +70,8 @@ class Player {
 				return;
 			case 'up': this.y-=84;
 				if (this.y<-16) {
+
+					this.scoreUp();
 					this.y = 404;
 				}
 				return;
@@ -78,22 +85,66 @@ class Player {
 	reset() {
 		this.x = 200;
 		this.y = 320;
+		died();
 
 	}
+  scoreUp() {
+    this.score++;
+    scoring.innerHtml =`Score: ${player.score}`;
+  }
 
 
-
-// Now instantiate your objects.
 }
 
+function died() {
+	player.lifes--;
+	let last = hearts.length -1
+	hearts.pop(hearts[last]);
+	if (player.lifes === 0) {
+		openModal();
+}
+}
 
+function openModal() {
+		info.textContent = `Died. Score: ${player.score}`
+		modal.style.display = 'block';
+
+  }
+class Heart {
+	constructor(x,y) {
+		this.sprite = 'images/Heart.png';
+		this.x = x;
+		this.y = y;
+		this.width = 40;
+		this.height = 50;
+	}
+	render() {
+		  ctx.drawImage(Resources.get(this.sprite),this.x,this.y, this.width, this.height );
+	}
+
+}
+// Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
-allEnemies= [new Enemy(-100,63), new Enemy(-150, 146), new Enemy(0,229)];
+allEnemies = [new Enemy(-100,63), new Enemy(-150, 146), new Enemy(0,229)];
 const [enemy1, enemy2,enemy3] = allEnemies;
+hearts = [ new Heart(380, 540), new Heart(420, 540), new Heart( 460, 540)];
+const [ heart1, heart2, heart3 ] = hearts;
+
 // Place the player object in a variable called player
 const player = new Player(200,320);
 
+//  btn.addEventListener('click', playMe);
+window.addEventListener('click', outsideClick);
 
+function outsideClick(e) {
+  if(e.target == modal) {
+    modal.style.display = 'none';
+  }
+};
+function playMe() {
+  modal.style.display = 'none';
+  return;
+}
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
@@ -105,4 +156,5 @@ document.addEventListener('keyup', function(e) {
     };
 
     player.handleInput(allowedKeys[e.keyCode]);
+
 });
