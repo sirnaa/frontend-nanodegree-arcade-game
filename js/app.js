@@ -1,9 +1,10 @@
 window.onload = function() {
-    const modal = document.querySelector('#modal');
+    const modal = document.getElementById('modal');
 		const info = document.getElementById('info');
 		const scoring = document.getElementById('scoring');
-      const btn = document.querySelector('.btn');
-
+    const btn = document.getElementById('btn');
+    btn.addEventListener('click', player.playMe);
+    scoring.innerHtml =`Score: ${player.score}`;
   }
 
 	// Enemies our player must avoid
@@ -35,8 +36,7 @@ class Enemy {
 	collision() {
 	  if (player.x<this.x+75 && player.x+70>this.x
 	    && player.y<this.y+65 && player.y+75>this.y) {
-				console.log('collision');
-	      player.reset();
+		   player.reset();
 	    }
 		}
 
@@ -90,9 +90,13 @@ class Player {
 	}
   scoreUp() {
     this.score++;
-    scoring.innerHtml =`Score: ${player.score}`;
   }
+   playMe() {
+    modal.style.display = 'none';
+  player = new Player(200,320);
+    hearts = [ new Heart(380, 540), new Heart(420, 540), new Heart( 460, 540)];
 
+  }
 
 }
 
@@ -100,7 +104,7 @@ function died() {
 	player.lifes--;
 	let last = hearts.length -1
 	hearts.pop(hearts[last]);
-	if (player.lifes === 0) {
+	if (player.lifes == 0) {
 		openModal();
 }
 }
@@ -131,9 +135,9 @@ hearts = [ new Heart(380, 540), new Heart(420, 540), new Heart( 460, 540)];
 const [ heart1, heart2, heart3 ] = hearts;
 
 // Place the player object in a variable called player
-const player = new Player(200,320);
+let player = new Player(200,320);
 
-//  btn.addEventListener('click', playMe);
+
 window.addEventListener('click', outsideClick);
 
 function outsideClick(e) {
@@ -141,10 +145,7 @@ function outsideClick(e) {
     modal.style.display = 'none';
   }
 };
-function playMe() {
-  modal.style.display = 'none';
-  return;
-}
+
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {

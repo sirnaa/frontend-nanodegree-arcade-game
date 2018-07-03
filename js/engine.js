@@ -69,7 +69,7 @@ var Engine = (function(global) {
     function init() {
         lastTime = Date.now();
         main();
-    
+
 
     }
 
@@ -177,6 +177,7 @@ var Engine = (function(global) {
           h.render();
         });
 
+      
 
     }
 

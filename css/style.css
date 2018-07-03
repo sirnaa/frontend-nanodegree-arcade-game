@@ -28,14 +28,14 @@ body {
   box-shadow: 0 px 8px 0 rgba( 0, 0, 0, 0.5), o 7px 16px o rgba(0, 0, 0, 0.15);
 
 }
-.btn {
+#btn {
   color: #222;
   align: center;
   font-size: 30px;
 
 }
-.btn:hover,
-.btn:focus {
+#btn:hover,
+#btn:focus {
   color: #000;
   text-decoration: none;
   cursor: pointer;
