@@ -2,10 +2,9 @@
 window.onload = function() {
     const modal = document.getElementById('modal');
     const info = document.getElementById('info');
-    const scoring = document.getElementById('scoring');
     const btn = document.getElementById('btn');
     btn.addEventListener('click', player.playMe);
-    scoring.innerHtml = `Score: ${player.score}`;
+
 }
 
 // @constructor Enemy object prototype
@@ -29,6 +28,7 @@ class Enemy {
     // @description draw enemy method
     render() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+
     }
     collision() {
         if (player.x < this.x + 75 && player.x + 70 > this.x &&
@@ -50,8 +50,11 @@ class Player {
         this.score = 0;
     }
     update() {}
-    render() {
+      render() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+        ctx.fillStyle = "black";
+        ctx.font = "20px Forte Regular";
+        ctx.fillText("Score: " + this.score, 210, 70);
     }
     //@description player inable to go off screen
     handleInput(allowedKeys) {
@@ -72,7 +75,7 @@ class Player {
                 this.y -= 84;
                 if (this.y < -16) {
 
-                    this.scoreUp();
+                    this.score++;
                     this.y = 404;
                 }
                 return;
@@ -88,12 +91,10 @@ class Player {
     reset() {
         this.x = 200;
         this.y = 320;
-        died();
+        this.died();
 
     }
-    scoreUp() {
-        this.score++;
-    }
+
     // @constructor function to start new game
     playMe() {
         modal.style.display = 'none';
@@ -101,17 +102,18 @@ class Player {
         hearts = [new Heart(380, 540), new Heart(420, 540), new Heart(460, 540)];
 
     }
+    died() {
+       this.lifes--;
+       let last = hearts.length - 1
+       hearts.pop(hearts[last]);
+       if (this.lifes == 0) {
+           openModal();
+       }
+   }
 
 }
 
-function died() {
-    player.lifes--;
-    let last = hearts.length - 1
-    hearts.pop(hearts[last]);
-    if (player.lifes == 0) {
-        openModal();
-    }
-}
+
 
 function openModal() {
     info.textContent = `Died. Score: ${player.score}`

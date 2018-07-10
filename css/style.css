@@ -2,11 +2,7 @@ body {
      text-align: center;
      font-family: Arial;
 }
- #scoring {
-     position: fixed;
-     top: 10px;
-     left: 10px;
-}
+ 
  #modal {
      display: none;
      position:fixed;
@@ -34,5 +30,5 @@ body {
      color: #000;
      text-decoration: none;
      cursor: pointer;
-    
+
 }
