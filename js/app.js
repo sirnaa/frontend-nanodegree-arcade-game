@@ -3,7 +3,7 @@ window.onload = function() {
     const modal = document.getElementById('modal');
     const info = document.getElementById('info');
     const btn = document.getElementById('btn');
-    btn.addEventListener('click', player.playMe);
+    btn.addEventListener('click', playMe);
 
 }
 
@@ -49,7 +49,7 @@ class Player {
         this.lifes = 3;
         this.score = 0;
     }
-    update() {}
+
       render() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
         ctx.fillStyle = "black";
@@ -82,7 +82,7 @@ class Player {
             case 'down':
                 this.y += 84;
                 if (this.y > 404) {
-                    this.y = -16;
+                    this.y = 404;
                 }
                 return;
         }
@@ -95,31 +95,32 @@ class Player {
 
     }
 
-    // @constructor function to start new game
-    playMe() {
-        modal.style.display = 'none';
-        player = new Player(200, 320);
-        hearts = [new Heart(380, 540), new Heart(420, 540), new Heart(460, 540)];
 
-    }
     died() {
        this.lifes--;
        let last = hearts.length - 1
        hearts.pop(hearts[last]);
        if (this.lifes == 0) {
-           openModal();
+           this.openModal();
        }
    }
 
+    openModal() {
+       info.textContent = `Died. Score: ${this.score}`
+       modal.style.display = 'block';
+
+   }
+}
+// @constructor function to start new game
+function playMe() {
+    modal.style.display = 'none';
+    player = new Player(200, 320);
+    hearts = [new Heart(380, 540), new Heart(420, 540), new Heart(460, 540)];
+
 }
 
 
 
-function openModal() {
-    info.textContent = `Died. Score: ${player.score}`
-    modal.style.display = 'block';
-
-}
 // @constructor heart object representing lifes in the game
 class Heart {
     constructor(x, y) {
@@ -149,7 +150,7 @@ window.addEventListener('click', outsideClick);
 
 function outsideClick(e) {
     if (e.target == modal) {
-        modal.style.display = 'none';
+      playMe();
     }
 };
 
